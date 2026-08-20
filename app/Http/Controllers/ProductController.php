@@ -22,6 +22,7 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
+            'category_id' => 'required|exists:category,id',
        ]);
 
        $product = Product::create($validatedData);
@@ -37,7 +38,17 @@ class ProductController extends Controller
     //Atualizar produto
     public function update(Request $request, Product $product)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'description' => 'sometimes|nullable|string',
+            'price' => 'sometimes|required|numeric|min:0',
+            'quantity' => 'sometimes|required|integer|min:0',
+            'category_id' => 'sometimes|required|exists:category,id',
+        ]);
+
+
+        $product->update($validatedData);
+        return response()->json($product);
     }
 
     //Excluir produto
