@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class stock extends Model
+class Stock extends Model
 
 {
 protected $table = 'stock';
 
 protected $fillable = [
         'type',
-        'quantity',
         'product_id',
+        'quantity',
     ];
 
     public function product()

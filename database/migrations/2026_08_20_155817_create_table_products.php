@@ -18,6 +18,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->foreignId('category_id')->constrained('category')->cascadeOnDelete(); // Chave estrangeira para a tabela de categorias
             $table->unsignedInteger('quantity')->default(0); // unsignedInteger para não ter quantidade negativa de produtos
+            $table->unsignedInteger('minimum_stock')->default(0); // Estoque mínimo do produto
 
             $table->timestamps();
         });

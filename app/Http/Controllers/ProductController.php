@@ -23,7 +23,10 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'quantity' => 'required|integer|min:0',
             'category_id' => 'required|exists:category,id',
+            'minimum_stock' => 'required|integer|min:0',
        ]);
+
+
 
        $product = Product::create($validatedData);
         return response()->json($product, 201);
@@ -44,7 +47,6 @@ class ProductController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'description' => 'sometimes|nullable|string',
             'price' => 'sometimes|required|numeric|min:0',
-            'quantity' => 'sometimes|required|integer|min:0',
             'category_id' => 'sometimes|required|exists:category,id',
         ]);
 
@@ -59,4 +61,13 @@ class ProductController extends Controller
         $product->delete();
         return response()->json(['message' => 'Produto removido com sucesso!']);
     }
+
+    public function lowStock()
+    {
+        $products = Product::with('category')->whereColumn('quantity', '<=', 'minimum_stock')->get();
+        return response()->json($products);
+
+    }
+
+    
 }

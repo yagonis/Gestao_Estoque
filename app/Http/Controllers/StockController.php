@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class StockController extends Controller
 {
@@ -23,28 +25,49 @@ class StockController extends Controller
     public function store(Request $request)
     {
        $validatedData = $request->validate([
-        'product_id' => 'required|exists:products,id',
         'type' => 'required|in:entry,exit',
+        'product_id' => 'required|exists:products,id',
         'quantity' => 'required|integer|min:1'
        ]);
 
-       $product = Product::findOrFail($validatedData['product_id']);
+        try {
+            $movement = DB::transaction(function () use ($validatedData) {
+                $product = Product::where('id', $validatedData['product_id'])
+                    ->lockForUpdate()
+                    ->firstOrFail();
 
-       if($validatedData['type'] === 'entry') {
-        $product->quantity += $validatedData['quantity'];
-       }
+                if ($validatedData['type'] === 'entry') {
+                    $product->quantity += $validatedData['quantity'];
+                } else {
+                    if ($product->quantity < $validatedData['quantity']) {
+                        abort(response()->json(['message' => 'Insufficient stock for this exit movement.'], 422));
+                    }
+                    $product->quantity -= $validatedData['quantity'];
+                }
 
-       if ($validatedData['type'] === 'exit') {
-        if($product->quantity < $validatedData['quantity']) {
-            return response()->json(['error' => 'Insufficient stock for this product.'], 422);
+                $product->save();
+
+                return Stock::create($validatedData);
+            });
+
+            return response()->json([
+                'message' => 'Stock movement created successfully.',
+                'data' => [
+                    'id' => $movement->id,
+                    'product_id' => $movement->product_id,
+                    'type' => $movement->type,
+                    'quantity' => $movement->quantity,
+                    'created_at' => $movement->created_at,
+                ]
+            ], 201);
+        } catch (\Throwable $e) {
+            Log::error('Error creating stock movement', [
+                'error' => $e->getMessage(),
+                'payload' => $validatedData
+            ]);
+
+            return response()->json(['message' => 'Internal server error.'], 500);
         }
-        $product->quantity -= $validatedData['quantity'];
-       }
-
-       $product->save();
-       
-       $movement = Stock::create($validatedData);
-        return response()->json($movement, 201);
     }
 
     /**
@@ -60,29 +83,7 @@ class StockController extends Controller
      */
     public function update(Request $request, Stock $stock)
     {
-        $validatedData = $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'type' => 'required|in:entry,exit',
-            'quantity' => 'required|integer|min:1'
-        ]);
-
-        $product = Product::findOrFail($validatedData['product_id']);
-
-        if($validatedData['type'] === 'entry') {
-            $product->quantity += $validatedData['quantity'];
-        }
-
-        if ($validatedData['type'] === 'exit') {
-            if($product->quantity < $validatedData['quantity']) {
-                return response()->json(['error' => 'Insufficient stock for this product.'], 422);
-            }
-            $product->quantity -= $validatedData['quantity'];
-        }
-
-        $product->save();
-
-        $stock->update($validatedData);
-        return response()->json($stock);
+        //
     }
 
     /**
