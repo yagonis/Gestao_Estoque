@@ -10,7 +10,7 @@ class ProductController extends Controller
     //Listagem de produtos
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('category')->get();
         return response()->json($products);
     }
 
@@ -32,6 +32,8 @@ class ProductController extends Controller
     //Buscar produto específico
     public function show(Product $product)
     {
+       $product->load('category');
+       
         return response()->json($product);
     }
 
