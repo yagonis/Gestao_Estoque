@@ -4,30 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
     //Listagem de produtos
     public function index()
     {
-        $products = Product::with('category')->get();
-        return response()->json($products);
+        $products = Product::all();
+        return ProductResource::collection($products);
     }
 
     //Criação de produto
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-       $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|min:0',
-            'quantity' => 'required|integer|min:0',
-            'category_id' => 'required|exists:category,id',
-            'minimum_stock' => 'required|integer|min:0',
-       ]);
-
-
-
+       $validatedData = $request->validated();
+       
        $product = Product::create($validatedData);
         return response()->json($product, 201);
     }
@@ -35,22 +29,13 @@ class ProductController extends Controller
     //Buscar produto específico
     public function show(Product $product)
     {
-       $product->load('category');
-       
-        return response()->json($product);
+       return new ProductResource($product);
     }
 
     //Atualizar produto
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $validatedData = $request->validate([
-            'name' => 'sometimes|required|string|max:255',
-            'description' => 'sometimes|nullable|string',
-            'price' => 'sometimes|required|numeric|min:0',
-            'category_id' => 'sometimes|required|exists:category,id',
-        ]);
-
-
+        $validatedData = $request->validated();
         $product->update($validatedData);
         return response()->json($product);
     }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Stock;
 use App\Models\Product;
+use App\Http\Requests\StoreStockRequest;
+use App\Http\Resources\StockResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -16,19 +18,16 @@ class StockController extends Controller
     public function index()
     {
         $stocks = Stock::with('product')->get();
-        return response()->json($stocks);
+        
+        return StockResource::collection($stocks);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreStockRequest $request)
     {
-       $validatedData = $request->validate([
-        'type' => 'required|in:entry,exit',
-        'product_id' => 'required|exists:products,id',
-        'quantity' => 'required|integer|min:1'
-       ]);
+       $validatedData = $request->validated();
 
         try {
             $movement = DB::transaction(function () use ($validatedData) {
