@@ -2,11 +2,15 @@
 
 @section('title', 'Dashboard')
 
+@php
+    $products = \App\Models\Product::all();
+@endphp
+
 @section('content')
     <section class="card-grid">
         <article class="card">
             <span class="card__label"> Produtos Cadastrados </span>
-            <strong class="card__value"> {{ $totalProducts ?? 0 }} </strong>
+            <strong class="card__value"> {{ $products->count() }} </strong>
         </article>
 
         <article class="card">

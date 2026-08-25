@@ -25,5 +25,14 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function index()
+    {
+        return view('dashboard.index');
+    }
     
+    public function getProducts()
+    {
+        $products = Product::all();
+        return view('dashboard.index', compact('products'));
+    }
 }

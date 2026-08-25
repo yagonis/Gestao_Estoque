@@ -13,7 +13,7 @@
                 <p class="mt-2 text-sm text-slate-500">Entre para gerenciar seu estoque.</p>
             </div>
 
-            <form method="POST" action="/login" class="space-y-5">
+            <form method="POST" action="{{ route('login.authenticate') }}" class="space-y-5">
                 @csrf
 
                 <div>

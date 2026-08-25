@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -14,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return ProductResource::collection($products);
+        return view('products.index', compact('products'));
     }
 
     //Criação de produto
@@ -22,8 +23,9 @@ class ProductController extends Controller
     {
        $validatedData = $request->validated();
        
-       $product = Product::create($validatedData);
-        return response()->json($product, 201);
+        Product::create($validatedData);
+
+       return redirect()->route('products.index')->with('success', 'Produto criado com sucesso!');
     }
 
     //Buscar produto específico
@@ -54,5 +56,10 @@ class ProductController extends Controller
 
     }
 
+    public function create()
+    {
+        $categories = Category::all();
+        return view('products.create', compact('categories'));
+    }
     
 }
