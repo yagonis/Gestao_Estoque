@@ -1,6 +1,6 @@
 @php
     $links = [
-        ['label' => 'Dashboard', 'route' => 'dashboard.index', 'icon' => '⌂'],
+        ['label' => 'Dashboard', 'route' => 'dashboard', 'icon' => '⌂'],
         ['label' => 'Produtos', 'route' => 'products.index', 'icon' => '◈'],
         ['label' => 'Categorias', 'route' => 'categories.index', 'icon' => '◇'],
         ['label' => 'Estoque', 'route' => 'stock.index', 'icon' => '▣'],

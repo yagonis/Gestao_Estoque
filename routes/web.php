@@ -1,49 +1,64 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-//use App\Http\Controllers\CategoryController;
-//use App\Http\Controllers\StockController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductController;
 
+// Rotas de autenticação
+Route::middleware('guest')->group(function () {
 
-//Auth Routes
-Route::get('/login', [AuthController::class, 'create'])
-->middleware('guest')
-->name('login');
+    Route::get('/login', [AuthController::class, 'create'])
+        ->name('login');
 
-Route::post('/login', [AuthController::class, 'login'])
-->middleware('guest')
-->name('login.authenticate');
+    Route::post('/login', [AuthController::class, 'login'])
+        ->name('login.authenticate');
 
-//Rotas que precisam de autenticação
-Route::middleware('auth')->group(function() {
+});
+
+// Rotas autenticadas
+Route::middleware('auth')->group(function () {
+
+    // Dashboard
     Route::get('/', [DashboardController::class, 'index'])
-    ->middleware('auth')
-    ->name('dashboard');
+        ->name('dashboard');
 
+    // Logout
+    Route::post('/logout', [AuthController::class, 'logout'])
+        ->name('logout');
+
+    // Produtos - qualquer usuário autenticado pode visualizar
     Route::get('/products', [ProductController::class, 'index'])
         ->name('products.index');
 
+    // Categorias - qualquer usuário autenticado pode visualizar
+    Route::get('/categories', [CategoryController::class, 'index'])
+        ->name('categories.index');
 
-    Route::view('/categories', 'categories.index')->name('categories.index');
-    Route::view('/stock', 'stock.index')->name('stock.index');
+    // Estoque
+    Route::view('/stock', 'stock.index')
+        ->name('stock.index');
 
+    // Apenas administradores
+    Route::middleware('admin')->group(function () {
 
-    Route::middleware('admin')->group(function() {
-        
+        // Produtos
         Route::get('/products/create', [ProductController::class, 'create'])
-        -> name('products.create');
-    
+            ->name('products.create');
+
         Route::post('/products', [ProductController::class, 'store'])
-        -> name('products.store');
-    
-        //Categories Routes
-        Route::view('/categories/create', 'categories.create')->name('categories.create');
-    
-        //Stock Routes
-        Route::view('/stock/create', 'stock.create')->name('stock.create');
+            ->name('products.store');
+
+        // Categorias
+        Route::get('/categories/create', [CategoryController::class, 'create'])
+            ->name('categories.create');
+
+        Route::post('/categories', [CategoryController::class, 'store'])
+            ->name('categories.store');
+
+        // Estoque
+        Route::view('/stock/create', 'stock.create')
+            ->name('stock.create');
     });
 });

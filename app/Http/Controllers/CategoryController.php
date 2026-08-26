@@ -26,8 +26,9 @@ class CategoryController extends Controller
     {
         $validatedData = $request->validated();
 
-        $category = Category::create($validatedData);
-        return response()->json($category, 201);
+        Category::create($validatedData);
+
+        return redirect()->route('categories.index')->with('success', 'Categoria criada com sucesso!');
     }
 
     /**

@@ -91,7 +91,25 @@ body {
     background: #fff;
     border-bottom: 1px solid #eadde5;
 }
+.page-header__right{
+    display:flex;
+    align-items:center;
+    gap: 15px;
+    margin-left: auto;
+}
 
+.page-header__logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: #d46ba0;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
 .page-header h1 {
     margin: 4px 0 0;
     font-size: 28px;
