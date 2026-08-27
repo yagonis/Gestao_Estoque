@@ -59,7 +59,10 @@ Route::middleware('auth')->group(function () {
             ->name('categories.store');
 
         // Estoque
-        Route::view('/stock/create', 'stock.create')
+        Route::get('/stock/create', [StockController::class, 'create'])
             ->name('stock.create');
+
+        Route::post('/stock', [StockController::class, 'store'])
+            ->name('stock.store');
     });
 });

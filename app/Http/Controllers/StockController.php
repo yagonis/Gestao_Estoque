@@ -17,9 +17,11 @@ class StockController extends Controller
      */
     public function index()
     {
-        $stocks = Stock::with('product')->get();
+        $stocks = Stock::with('product')->latest()->get();
+
+        $products = Product::orderBy('name')->get();
         
-        return view('stock.index', compact('stocks'));
+        return view('stock.index', compact('stocks', 'products'));
     }
 
     /**
