@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return CategoryResource::collection($categories);
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -57,5 +57,10 @@ class CategoryController extends Controller
     {
         $category->delete();
         return response()->json(null, 204);
+    }
+
+    public function create()
+    {
+        return view('categories.create');
     }
 }

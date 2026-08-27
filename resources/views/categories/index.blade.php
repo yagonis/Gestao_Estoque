@@ -4,7 +4,7 @@
 
 @section('content')
     <section class="panel">
-        <div class="panel_header">
+        <div class="panel__header">
             <div>
                 <h2> Categorias</h2>
                 <p> Conteúdo de Cateogorias </p>

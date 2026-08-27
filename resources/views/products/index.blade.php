@@ -9,7 +9,7 @@
                 <h2> Produtos </h2>
                 <p> Gerencie os produtos cadastrados no sistema. </p>
             </div>
-        <a class="button" href="{{ Route::has('products.create') ? route('products.create') : '#' }}"> Novo Produto </a>
+            <a class="button" href="{{ Route::has('products.create') ? route('products.create') : '#' }}"> Novo Produto </a>
         </div>
     </section>
 @endsection

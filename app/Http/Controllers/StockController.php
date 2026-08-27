@@ -19,7 +19,7 @@ class StockController extends Controller
     {
         $stocks = Stock::with('product')->get();
         
-        return StockResource::collection($stocks);
+        return view('stock.index', compact('stocks'));
     }
 
     /**

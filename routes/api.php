@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/products/low-stock', [ProductController::class, 'lowStock'] );
 
 
-Route::apiResource('category', CategoryController::class);
-
-Route::apiResource('stock', StockController::class);
-
 Route::get('/dashboard/summary', [DashboardController::class, 'summary']);
 
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -28,15 +24,22 @@ Route::middleware('auth:sanctum')->group(function () {
     //Qualquer usuário pode ter acesso
     Route::get('/products', [ProductController::class, 'index']);
     Route::get('/products/{product}', [ProductController::class, 'show']);
+    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::get('/categories/{category}', [CategoryController::class, 'show']);
+    Route::get('/stock', [StockController::class, 'index']);
 
     //Apenas Administradores podem ter acesso
     Route::middleware('admin')->group(function() {
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products/{product}', [ProductController::class, 'update']);
     Route::delete('/products/{product}', [ProductController::class, 'destroy']);
+    Route::post('/categories', [CategoryController::class, 'store']);
+    Route::put('/categories/{category}', [CategoryController::class, 'update']);
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+    Route::post('/stock', [StockController::class, 'store']);
+    Route::post('/users', [UserController::class, 'store']);
+    Route::put('/users/{user}', [UserController::class, 'update']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
     });
-});
 
-Route::middleware('auth:sanctum', 'admin')->group(function () {
-    Route::apiResource('users', UserController::class);
 });

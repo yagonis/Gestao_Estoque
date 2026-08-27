@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StockController;
 
 // Rotas de autenticação
 Route::middleware('guest')->group(function () {
@@ -37,7 +38,7 @@ Route::middleware('auth')->group(function () {
         ->name('categories.index');
 
     // Estoque
-    Route::view('/stock', 'stock.index')
+    Route::get('/stock', [StockController::class, 'index'])
         ->name('stock.index');
 
     // Apenas administradores
