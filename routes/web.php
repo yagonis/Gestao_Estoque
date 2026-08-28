@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\UserController;
 
 // Rotas de autenticação
 Route::middleware('guest')->group(function () {
@@ -64,5 +65,15 @@ Route::middleware('auth')->group(function () {
 
         Route::post('/stock', [StockController::class, 'store'])
             ->name('stock.store');
+
+        // Usuários
+        Route::get('/users', [UserController::class, 'index'])
+            ->name('users.index');
+
+        Route::post('/users', [UserController::class, 'store'])
+            ->name('users.store');
+
+        Route::get('/users/create', [UserController::class, 'create'])
+            ->name('users.create');
     });
 });

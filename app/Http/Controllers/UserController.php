@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -16,7 +17,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return UserResource::collection($users);
+        return view('users.index', compact('users'));
+
     }
 
     /**
@@ -26,8 +28,13 @@ class UserController extends Controller
     {
         $validatedData = $request->validated();
 
-        $user = User::create($validatedData);
-        return response()->json($user, 201);
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        
+        User::create($validatedData);
+
+        return redirect()
+        ->route('users.index')
+        ->with('success', 'Usuário criado com sucesso!');
     }
 
     /**
@@ -55,6 +62,11 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return response()->json(['message' => 'Produto removido com sucesso!']);
+        return response()->json(['message' => 'Usuário removido com sucesso!']);
+    }
+
+    public function create()
+    {
+        return view('users.create');
     }
 }
