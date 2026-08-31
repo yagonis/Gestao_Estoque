@@ -19,7 +19,7 @@
                 </div>
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700">Senha</label>
-                    <input type="password" name="password" id="password" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-pink-400 focus:ring-4 focus:ring-pink-100 @error('name') border-red-400 focus:border-red-400 focus:ring-red-100 @enderror">
+                    <input type="password" name="password" minlength="8" id="password" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-pink-400 focus:ring-4 focus:ring-pink-100 @error('name') border-red-400 focus:border-red-400 focus:ring-red-100 @enderror">
                 </div>
                 <div>
                     <select name="role" id="role" class="w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-pink-400 focus:ring-4 focus:ring-pink-100 @error('name') border-red-400 focus:border-red-400 focus:ring-red-100 @enderror">

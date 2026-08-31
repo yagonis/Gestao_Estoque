@@ -20,15 +20,17 @@ class ProductSeeder extends Seeder
             'category_id' => 1,
             'quantity' => 100,
             'minimum_stock' => 10,
+            'image' => 'products/base-liquida.jpg'
         ]);
 
         Product::create([
-            'name' => 'Shampoo',
-            'description' => 'Shampoo para cabelos secos',
+            'name' => 'Shampoo Relâmpago McQueen',
+            'description' => 'Shampoo Relampago McQueen para cabelos brilhantes e rápidos',
             'price' => 29.99,
             'category_id' => 2,
             'quantity' => 50,
             'minimum_stock' => 5,
+            'image' => 'products/relampago-mcqueen.jpg'
         ]);
     }
 }

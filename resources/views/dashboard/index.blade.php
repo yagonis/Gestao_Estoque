@@ -15,12 +15,12 @@
 
         <article class="card">
             <span class="card__label"> Produtos em estoque baixo </span>
-            <strong class="card__value"> {{ $lowStockProducts ?? 0 }} </strong>
+            <strong class="card__value"> {{ $products->where('quantity', '<', 'minimum_stock')->count() }} </strong>
         </article>
 
         <article class="card">
             <span class="card__label"> Produtos fora de estoque </span>
-            <strong class="card__value"> {{ $outOfStockProducts ?? 0 }} </strong>
+            <strong class="card__value"> {{ $products->where('quantity', '=', 0)->count() }} </strong>
         </article>
     </section>
 

@@ -51,16 +51,8 @@ class StockController extends Controller
                 return Stock::create($validatedData);
             });
 
-            return response()->json([
-                'message' => 'Stock movement created successfully.',
-                'data' => [
-                    'id' => $movement->id,
-                    'product_id' => $movement->product_id,
-                    'type' => $movement->type,
-                    'quantity' => $movement->quantity,
-                    'created_at' => $movement->created_at,
-                ]
-            ], 201);
+            return redirect()->route('stock.index')->with('success', 'Movimento de estoque registrado com sucesso!');
+            
         } catch (\Throwable $e) {
             Log::error('Error creating stock movement', [
                 'error' => $e->getMessage(),
