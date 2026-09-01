@@ -66,3 +66,64 @@ if (editModal && editForm && editButtons.length) {
         }
     });
 }
+
+// -- Edição de usuário --
+const editUserModal = document.getElementById('editUserModal');
+const editUserForm = document.getElementById('editUserForm');
+const closeEditUserModal = document.getElementById('closeEditUserModal');
+const cancelEditUser = document.getElementById('cancelEditUser');
+const editUserButtons = document.querySelectorAll('.edit-user');
+
+if (editUserModal && editUserForm && editUserButtons.length) {
+    editUserButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+
+            if (!id) return;
+
+            const nameInput = document.getElementById('editName');
+            const emailInput = document.getElementById('editEmail');
+
+            if (nameInput) nameInput.value = btn.dataset.name ?? '';
+            if (emailInput) emailInput.value = btn.dataset.email ?? '';
+
+            editUserForm.dataset.userId = id;
+            editUserModal.classList.remove('hidden');
+            editUserModal.classList.add('flex');
+        });
+    });
+
+    const hideUserModal = () => {
+        editUserModal.classList.add('hidden');
+        editUserModal.classList.remove('flex');
+    };
+
+    if (closeEditUserModal) closeEditUserModal.addEventListener('click', hideUserModal);
+    if (cancelEditUser) cancelEditUser.addEventListener('click', hideUserModal);
+
+    editUserForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const id = editUserForm.dataset.userId;
+        const formData = new FormData(editUserForm);
+        formData.append('_method', 'PUT');
+
+        const csrfToken = document.querySelector('input[name="_token"]');
+
+        const response = await fetch(`/users/${id}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': csrfToken ? csrfToken.value : '',
+                'Accept': 'application/json',
+            },
+            body: formData,
+        });
+
+        if (response.ok) {
+            location.reload();
+        } else {
+            const err = await response.json();
+            console.error(err);
+        }
+    });
+}

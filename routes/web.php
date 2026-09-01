@@ -81,5 +81,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/users/create', [UserController::class, 'create'])
             ->name('users.create');
+
+        Route::put('users/{user}', [UserController::class, 'update'])
+            ->name('users.update');
+
+        Route::get('/users/edit', [UserController::class, 'edit'])
+            ->name('users.edit');
     });
 });

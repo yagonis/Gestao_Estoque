@@ -26,7 +26,14 @@
         </article>
     </section>
 
-    <section class="panel">
-        
-    </section>
+    <div clas="flex flex-col gap-4 mt-6">
+        <div class="bg-yellow-400 p-4 rounded-lg shadow-md shadow-slate-900/5">
+            <div>
+
+            </div>
+        </div>
+        <div class="bg-green-600 p-4 rounded-lg shadow-md">
+
+        </div>
+    </div>
 @endsection
