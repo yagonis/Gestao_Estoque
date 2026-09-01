@@ -15,17 +15,18 @@
 
         <article class="card">
             <span class="card__label"> Produtos em estoque baixo </span>
-            <strong class="card__value"> {{ $products->where('quantity', '<', 'minimum_stock')->count() }} </strong>
+            <strong class="card__value"> 
+                {{ $products->filter(fn ($product) => $product->quantity < $product->minimum_stock)->count() }} 
+             </strong>
         </article>
 
         <article class="card">
             <span class="card__label"> Produtos fora de estoque </span>
-            <strong class="card__value"> {{ $products->where('quantity', '=', 0)->count() }} </strong>
+            <strong class="card__value"> {{ $products->filter(fn ($product) => $product->quantity === 0)->count() }} </strong>
         </article>
     </section>
 
     <section class="panel">
-        <h2> Bem vindo ao Dashboard do Glamour Make </h2>
-        <p> Use o menu lateral para navegar entre as funcionalidades do sistema. </p>
+        
     </section>
 @endsection

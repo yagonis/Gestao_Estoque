@@ -23,6 +23,10 @@ class ProductController extends Controller
     {
        $validatedData = $request->validated();
        
+        if($request->hasFile('image')){
+            $validatedData['image'] = $request->file('image')->store('products', 'public');
+        }
+
         Product::create($validatedData);
 
        return redirect()->route('products.index')->with('success', 'Produto criado com sucesso!');
@@ -39,7 +43,11 @@ class ProductController extends Controller
     {
         $validatedData = $request->validated();
         $product->update($validatedData);
-        return response()->json($product);
+        return redirect()->route('products.index')->with('success', 'Produto atualizado com sucesso!');
+
+        if($request->hasFile('image')) {
+            $validatedData['image'] = $request->file('image')->store('products', 'public');
+        }
     }
 
     //Excluir produto
@@ -62,4 +70,10 @@ class ProductController extends Controller
         return view('products.create', compact('categories'));
     }
     
+public function edit(Product $product)
+    {
+        $categories = Category::all();
+        return view('products.edit', compact('product', 'categories'));
+    }
+
 }

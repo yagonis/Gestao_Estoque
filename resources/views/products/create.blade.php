@@ -6,7 +6,7 @@
 @section('content')
     <div class="panel">
         <div>
-            <form method="POST" action="{{ route('products.store') }}" class="space-y-5">
+            <form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data" class="space-y-5">
                 @csrf
                 
                 <div>
