@@ -26,13 +26,13 @@
         </article>
     </section>
 
-    <div clas="flex flex-col gap-4 mt-6">
-        <div class="bg-yellow-400 p-4 rounded-lg shadow-md shadow-slate-900/5">
+    <div class="flex justify-between gap-4 mt-6 h-full">
+        <div class="p-4 rounded-lg shadow-md shadow-slate-900/5 w-2/3">
             <div>
-
+                
             </div>
         </div>
-        <div class="bg-green-600 p-4 rounded-lg shadow-md">
+        <div class="p-4 rounded-lg shadow-md shadow-slate-900/5 w-2/3">
 
         </div>
     </div>
