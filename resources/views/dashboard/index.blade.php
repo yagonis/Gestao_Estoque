@@ -27,13 +27,13 @@
     </section>
 
     <div class="flex justify-between gap-4 mt-6 h-full">
-        <div class="p-4 rounded-lg shadow-md shadow-slate-900/5 w-2/3">
+        <div class=" card p-4 rounded-lg shadow-md shadow-slate-900/5 w-2/3">
             <div>
-                
-            </div>
+                <span class="card__label"> Movimentações de produtos </span>
+            </div> 
         </div>
-        <div class="p-4 rounded-lg shadow-md shadow-slate-900/5 w-2/3">
-
+        <div class="card p-4 rounded-lg shadow-md shadow-slate-900/5 w-2/3">
+            <span class="card__label"> Histórico de vendas </span>
         </div>
     </div>
 @endsection
