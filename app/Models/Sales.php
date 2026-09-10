@@ -11,13 +11,13 @@ protected $table = 'sales';
 protected $fillable = [
         'product_id',
         'user_id',
-        'quantity',
+        'sales_item_id',
         'total_price',
         'sale_date',
         'status',
     ];
 
     public function sales_item(){
-        return $this->hasMany(Sales_item::class);
+        return $this->hasMany(salesItems::class);
     }
 }

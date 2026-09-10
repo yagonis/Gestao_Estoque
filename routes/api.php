@@ -6,6 +6,8 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SalesController;
+use App\Http\Controllers\SalesItemController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/products/low-stock', [ProductController::class, 'lowStock'] );
@@ -13,7 +15,7 @@ Route::get('/products/low-stock', [ProductController::class, 'lowStock'] );
 
 Route::get('/dashboard/summary', [DashboardController::class, 'summary']);
 
-Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/login', [AuthController::class, 'LoginApi']);
 
 Route::middleware('auth:sanctum')->group(function () {
     
@@ -27,6 +29,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/categories', [CategoryController::class, 'index']);
     Route::get('/categories/{category}', [CategoryController::class, 'show']);
     Route::get('/stock', [StockController::class, 'index']);
+    Route::get('/sales', [SalesController::class, 'index']);
+    Route::post('/sales', [SalesController::class, 'store']);
+    Route::delete('/sales/{sale}', [SalesController::class, 'destroy']);
+    Route::get('/sales/{sales}', [SalesController::class, 'show']);
+    Route::get('/sales-items', [SalesItemController::class, 'index']);
+    Route::post('/sales-items', [SalesItemController::class, 'store']);
+    Route::get('/sales-items/{salesItems}', [SalesItemController::class, 'show']);
+    Route::put('/sales-items/{salesItems}', [SalesItemController::class, 'update']);
+    Route::delete('/sales-items/{salesItems}', [SalesItemController::class, 'destroy']);
+
 
     //Apenas Administradores podem ter acesso
     Route::middleware('admin')->group(function() {

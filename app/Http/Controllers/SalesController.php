@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Resources\SalesResource;
+use App\Http\Requests\StoreSalesRequest;
+use App\Models\Sales;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -11,38 +13,48 @@ class SalesController extends Controller
      */
     public function index()
     {
-        //
+        $sales = Sales::all();
+        return view('sales.index', compact('sales'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreSalesRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        Sales::create($validatedData);
+
+        return redirect()->route('sales.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Sales $sales)
     {
-        //
+        return new SalesResource($sales);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreSalesRequest $request, Sales $sales)
     {
-        //
+        $validatedData = $request->validated();
+        $sales->update($validatedData);
+
+        return redirect()->route('sales.index')->with('success', 'Venda atualizada com sucesso!');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Sales $sales)
     {
-        //
+        $sales->delete();
+        return response()->json(['message' => 'Venda removida com sucesso!']);
     }
 }
