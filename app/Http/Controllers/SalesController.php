@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use App\Http\Resources\SalesResource;
 use App\Http\Requests\StoreSalesRequest;
 use App\Models\Sales;
+use App\Models\Product;
+use App\Models\salesItems;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class SalesController extends Controller
@@ -22,11 +25,63 @@ class SalesController extends Controller
      */
     public function store(StoreSalesRequest $request)
     {
-        $validatedData = $request->validated();
+        $items = $request->validated()['items'];
 
-        Sales::create($validatedData);
+        return DB::transaction(function () use ($items) {
 
-        return redirect()->route('sales.index');
+            $total = 0;
+
+        foreach ($items as $item) {
+            $product = Product::findOrFail($item['product_id']);
+
+            $subtotal = $product->price * $item['quantity'];
+            // Aqui você pode fazer algo com o subtotal, por exemplo, salvar em um banco de dados ou calcular impostos.
+
+            $total += $subtotal;
+        }
+
+        $sale = Sales::create([
+            'user_id' => auth()->id(),
+            'total_price' => $total,
+            'sale_date' => now(),
+            'status' => 'completed', // ou outro status inicial que você queira
+        ]);
+
+        foreach ($items as $item) {
+            $product = Product::lockForUpdate()->findOrFail($item['product_id']);
+
+            $quantity = $item['quantity'];
+
+            //Verificar estoque
+            if( $product->quantity < $quantity){
+                throw new \Exception(
+                    "Estoque insuficiente para o produto: {$product->name}"
+                );
+            }
+            
+            $unitPrice = $product->price;
+            $subtotal = $unitPrice * $quantity;
+
+            SalesItems::create([
+                'sale_id' => $sale->id,
+                'product_id' => $product->id,
+                'quantity' => $quantity,
+                'unit_price' => $unitPrice,
+                'subtotal' => $subtotal,
+            ]);
+
+            $totalPrice += $subtotal;
+
+            $product->decrement('quantity', $quantity);
+        }
+
+        $sale->update(['total_price' => $totalPrice]);
+
+        return redirect()
+        ->route('sales.index')
+        ->with('success', 'Venda criada com sucesso!');
+
+        });
     }
 
     /**
@@ -57,4 +112,6 @@ class SalesController extends Controller
         $sales->delete();
         return response()->json(['message' => 'Venda removida com sucesso!']);
     }
+
+    
 }

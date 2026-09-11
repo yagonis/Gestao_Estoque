@@ -23,7 +23,6 @@ class StoreSalesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => 'required|exists:products,id',
             'user_id' => 'required|exists:users,id',
             'total_price' => 'required|numeric|min:0',
             'sale_date' => 'required|date',

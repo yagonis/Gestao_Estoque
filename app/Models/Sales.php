@@ -9,7 +9,6 @@ class Sales extends Model
 
 protected $table = 'sales';
 protected $fillable = [
-        'product_id',
         'user_id',
         'sales_item_id',
         'total_price',

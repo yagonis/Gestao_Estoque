@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('sales_item_id')->constrained('table_sales_items')->cascadeOnDelete();
             $table->decimal('total_price', 10, 2);
             $table->dateTime('sale_date');
             $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
