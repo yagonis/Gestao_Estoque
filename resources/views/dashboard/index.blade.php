@@ -52,13 +52,11 @@
                             </div>    
                         </div>
                     </div>
-                <div>
+                    <div class="flex justify-end">
                         <p class="font-bold">
                             R$ {{ number_format($sale->total_price, 2, ',', '.') }}
                         </p>
                     </div>
-                </div>
-            </div>
         @empty
             <p class="text-gray-500">
                 Nenhuma venda realizada ainda.
