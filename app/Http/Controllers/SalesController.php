@@ -78,7 +78,7 @@ class SalesController extends Controller
         $sale->update(['total_price' => $totalPrice]);
 
         return redirect()
-        ->route('sales.index')
+        ->route('sales.store')
         ->with('success', 'Venda criada com sucesso!');
 
         });

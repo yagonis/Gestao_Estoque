@@ -13,7 +13,7 @@
         $hideSidebar = View::hasSection('hideSidebar');
     @endphp
 
-    <div class="app-shell {{ $hideSidebar ? 'app-shell--login' : '' }}">
+        <div class="app-shell {{ $hideSidebar ? 'app-shell--login' : '' }}">
 
         @if (!$hideSidebar)
             <x-sidebar />
@@ -30,5 +30,6 @@
             </main>
         </div>
     </div>
+    @stack('scripts')
 </body>
 </html>
