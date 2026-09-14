@@ -23,10 +23,9 @@ class StoreSalesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'total_price' => 'required|numeric|min:0',
-            'sale_date' => 'required|date',
-            'status' => 'required|string|in:pending,completed,canceled',
+            'items' => ['required', 'array', 'min:1'],
+            'items.*.product_id' => ['required', 'integer', 'exists:products,id'],
+            'items.*.quantity' => ['required', 'integer', 'min:1'],
         ];
     }
 }

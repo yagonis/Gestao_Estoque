@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Sales extends Model
 {
@@ -10,13 +11,18 @@ class Sales extends Model
 protected $table = 'sales';
 protected $fillable = [
         'user_id',
-        'sales_item_id',
         'total_price',
         'sale_date',
         'status',
     ];
 
-    public function sales_item(){
-        return $this->hasMany(salesItems::class);
+    public function items()
+    {
+        return $this->hasMany(salesItems::class, 'sale_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

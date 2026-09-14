@@ -33,7 +33,37 @@
             </div> 
         </div>
         <div class="card p-4 rounded-lg shadow-md shadow-slate-900/5 w-2/3">
-            <span class="card__label"> Histórico de vendas </span>
+            <h2 class="mt-4 space-y-3">
+                Histórico de vendas
+            </h2>
+
+            <div class="mt-4 space-y-3">
+                @forelse ($sales as $sale)
+                    <div class="rounded-lg bg-white p-4 shadow">
+                        <div class="flex justify-between">
+                            <div>
+                            <p class="font-semibold"> Venda #{{ $sale->id }}</p>
+                            
+                            <p class="text-sm text-gray-500"> Realizada por: {{ $sale->user->name }}</p>
+
+                            <p class="text-sm text-gray-500">
+                            {{ $sale->sale_date }}
+                            </p>
+                            </div>    
+                        </div>
+                    </div>
+                <div>
+                        <p class="font-bold">
+                            R$ {{ number_format($sale->total_price, 2, ',', '.') }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <p class="text-gray-500">
+                Nenhuma venda realizada ainda.
+            </p>
+        @endforelse
+            </div>
         </div>
-    </div>
 @endsection

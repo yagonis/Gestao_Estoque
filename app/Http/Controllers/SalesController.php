@@ -24,41 +24,33 @@ class SalesController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreSalesRequest $request)
-    {
-        $items = $request->validated()['items'];
+{
+    $items = $request->validated()['items'];
 
-        return DB::transaction(function () use ($items) {
+    DB::transaction(function () use ($items) {
 
-            $total = 0;
-
-        foreach ($items as $item) {
-            $product = Product::findOrFail($item['product_id']);
-
-            $subtotal = $product->price * $item['quantity'];
-            // Aqui você pode fazer algo com o subtotal, por exemplo, salvar em um banco de dados ou calcular impostos.
-
-            $total += $subtotal;
-        }
+        $total = 0;
 
         $sale = Sales::create([
             'user_id' => auth()->id(),
-            'total_price' => $total,
+            'total_price' => 0,
             'sale_date' => now(),
-            'status' => 'completed', // ou outro status inicial que você queira
+            'status' => 'completed',
         ]);
 
         foreach ($items as $item) {
-            $product = Product::lockForUpdate()->findOrFail($item['product_id']);
+
+            $product = Product::lockForUpdate()
+                ->findOrFail($item['product_id']);
 
             $quantity = $item['quantity'];
 
-            //Verificar estoque
-            if( $product->quantity < $quantity){
+            if ($product->quantity < $quantity) {
                 throw new \Exception(
                     "Estoque insuficiente para o produto: {$product->name}"
                 );
             }
-            
+
             $unitPrice = $product->price;
             $subtotal = $unitPrice * $quantity;
 
@@ -70,19 +62,20 @@ class SalesController extends Controller
                 'subtotal' => $subtotal,
             ]);
 
-            $totalPrice += $subtotal;
-
             $product->decrement('quantity', $quantity);
+
+            $total += $subtotal;
         }
 
-        $sale->update(['total_price' => $totalPrice]);
+        $sale->update([
+            'total_price' => $total
+        ]);
+    });
 
-        return redirect()
-        ->route('sales.store')
+    return redirect()
+        ->route('sales.index')
         ->with('success', 'Venda criada com sucesso!');
-
-        });
-    }
+}
 
     /**
      * Display the specified resource.

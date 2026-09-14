@@ -156,10 +156,12 @@
 
             </div>
 
-            <form method="POST" action="{{ route('sales.store') }}">
+            <form id="saleForm" method="POST" action="{{ route('sales.store') }}">
+            @csrf
+            <input type="hidden" name="cart" id="cartInput">
             <button
-                id="finishSale"
                 type="submit"
+                id="finishSale"
                 class="mt-5 w-full rounded-xl bg-pink-600 py-4 font-bold transition hover:bg-pink-700"
             >
                 Finalizar venda
@@ -179,6 +181,23 @@
 @push('scripts')
 
 <script>
+
+    const saleForm = document.getElementById('saleForm');
+    const saleItems = document.getElementById('cartInput');
+
+    saleForm.addEventListener('submmit', function(event) {
+        if (cart.lenght === 0) {
+            event.preventDefault();
+            alert('O carrinho está vazio. Adicione produtos antes de finalizar a venda.');
+            return;
+        }
+        saleItems.value = JSON.stringfy(
+            cart.map(item => ({
+                product_id: item.id,
+                quantity: item.quantity
+            }))
+        );
+    });
 
     const cart = [];
 

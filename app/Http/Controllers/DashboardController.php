@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Stock;
+use App\Models\Sales;
 
 use Illuminate\Http\Request;
 
@@ -27,7 +28,10 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('dashboard.index');
+    
+    $sales = Sales::with('user')->latest()->get();
+    
+    return view('dashboard.index', compact('sales'));
     }
     
     public function getProducts()
