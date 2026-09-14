@@ -158,9 +158,6 @@
 
 <form id="saleForm" method="POST" action="{{ route('sales.store') }}">
     @csrf
-
-    <input type="hidden" name="items" id="cartInput">
-
     <button
         type="submit"
         id="finishSale"
@@ -170,7 +167,7 @@
     </button>
 </form>
 
-        </div>
+    </div>
 
     </aside>
 
@@ -186,22 +183,36 @@
     const cart = [];
 
     const saleForm = document.getElementById('saleForm');
-    const saleItems = document.getElementById('cartInput');
 
+saleForm.addEventListener('submit', function(event) {
 
-    saleForm.addEventListener('submit', function(event) {
-        if (cart.length === 0) {
-            event.preventDefault();
-            alert('O carrinho está vazio. Adicione produtos antes de finalizar a venda.');
-            return;
-        }
-        saleItems.value = JSON.stringify(
-            cart.map(item => ({
-                product_id: item.id,
-                quantity: item.quantity
-            }))
-        );
+    if (cart.length === 0) {
+        event.preventDefault();
+
+        alert('O carrinho está vazio. Adicione produtos antes de finalizar a venda.');
+
+        return;
+    }
+
+    cart.forEach((item, index) => {
+
+        const productInput = document.createElement('input');
+
+        productInput.type = 'hidden';
+        productInput.name = `items[${index}][product_id]`;
+        productInput.value = item.id;
+
+        const quantityInput = document.createElement('input');
+
+        quantityInput.type = 'hidden';
+        quantityInput.name = `items[${index}][quantity]`;
+        quantityInput.value = item.quantity;
+
+        saleForm.appendChild(productInput);
+        saleForm.appendChild(quantityInput);
     });
+
+});
 
 
 
