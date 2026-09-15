@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('quantity')->default(1);
             $table->decimal('unit_price', 10, 2);
             $table->decimal('subtotal', 10, 2);
+            $table->timestamps();
         });
     }
 

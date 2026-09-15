@@ -37,7 +37,7 @@
                 Histórico de vendas
             </h2>
 
-            <div class="mt-4 space-y-3">
+            <div class="mt-4 space-y-3 max-h-96 overflow-y-auto pr-2">
                 @forelse ($sales as $sale)
                     <div class="rounded-lg bg-white p-4 shadow">
                         <div class="flex justify-between">

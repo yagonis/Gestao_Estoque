@@ -5,7 +5,7 @@ use App\Http\Resources\SalesResource;
 use App\Http\Requests\StoreSalesRequest;
 use App\Models\Sales;
 use App\Models\Product;
-use App\Models\salesItems;
+use App\Models\SalesItems;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
