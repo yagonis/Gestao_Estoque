@@ -6,6 +6,10 @@
     $products = \App\Models\Product::all();
 @endphp
 
+@php
+    $stock = \App\Models\Stock::all();
+@endphp
+
 @section('content')
     <section class="card-grid">
         <article class="card">
@@ -26,11 +30,31 @@
         </article>
     </section>
 
-    <div class="flex justify-between gap-4 mt-6 h-full">
+    <div class="flex justify-between gap-4 mt-6">
         <div class=" card p-4 rounded-lg shadow-md shadow-slate-900/5 w-2/3">
             <div>
                 <span class="card__label"> Movimentações de produtos </span>
             </div> 
+
+            <div class="mt-4 space-y-3 max-h-96 overflow-y-auto pr-2">
+                @forelse ($stock as $stockMovement)
+                    <div class="rounded-lg bg-white p-4 shadow">
+                        <div class="flex justify-between">
+                            <div>
+                            <p class="font-semibold"> Movimentação #{{ $stockMovement->id }}</p>
+
+                            <p class="text-sm text-gray-500">
+                            {{ $stockMovement->date }}
+                            </p>
+                            </div>    
+                        </div>
+                    </div>
+        @empty
+            <p class="text-gray-500">
+                Nenhuma movimentação de produtos realizada ainda.
+            </p>
+        @endforelse
+            </div>
         </div>
         <div class="card p-4 rounded-lg shadow-md shadow-slate-900/5 w-2/3">
             <h2 class="mt-4 space-y-3">
@@ -50,12 +74,12 @@
                             {{ $sale->sale_date }}
                             </p>
                             </div>    
+                        <div class="flex justify-end">
+                            <p class="font-bold">
+                                R$ {{ number_format($sale->total_price, 2, ',', '.') }}
+                            </p>
                         </div>
-                    </div>
-                    <div class="flex justify-end">
-                        <p class="font-bold">
-                            R$ {{ number_format($sale->total_price, 2, ',', '.') }}
-                        </p>
+                        </div>
                     </div>
         @empty
             <p class="text-gray-500">
@@ -64,4 +88,5 @@
         @endforelse
             </div>
         </div>
+    </div>
 @endsection
