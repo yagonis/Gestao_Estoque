@@ -11,7 +11,7 @@
 
 <aside id="sidebar" class="sidebar" aria-label="Menu principal">
 
-    <div class="sidebar__brand">
+    <div class="sidebar__brand flex justify-between">
 
         <span class="sidebar__logo">GM</span>
 
@@ -19,8 +19,9 @@
             <strong>Glamour Make</strong>
             <small>Gestão de Estoque</small>
         </div>
+    </div>
 
-        <div id="hamburguer">
+        <div id="hamburguer" >
             <button
                 id="sidebarToggle"
                 type="button"
@@ -29,9 +30,7 @@
                 ☰
             </button>
         </div>
-
-    </div>
-
+    
     <nav class="sidebar__nav">
 
         @foreach ($links as $link)

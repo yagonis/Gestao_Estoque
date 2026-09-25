@@ -32,6 +32,8 @@ body {
     padding: 24px;
     background: #3d2635;
     color: #fff;
+    transition: width 0.3s ease;
+    flex-shrink: 0;
 }
 
 .sidebar__brand {
@@ -50,12 +52,14 @@ body {
     display: grid;
     width: 44px;
     height: 44px;
+    min-width: 44px;
     place-items: center;
     border-radius: 14px;
     background: #f0a7c5;
     color: #3d2635;
     font-weight: 800;
 }
+
 
 .sidebar__nav {
     display: grid;
@@ -74,7 +78,8 @@ body {
 
 .sidebar__link:hover,
 .sidebar__link--active {
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(173, 171, 171, 0.14);
+    transition: background 0.2s ease;
 }
 
 .app-content {
@@ -390,33 +395,33 @@ body {
     padding: 0;
 }
 
+.sidebar--collapsed {
+    width: 88px;
+}
+
+.sidebar--collapsed .sidebar__text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.sidebar--collapsed .sidebar__link {
+    justify-content:baseline;
+    
+}
+
+.sidebar--collapsed .sidebar__brand {
+    justify-content: center;
+}
+
 @media (max-width: 800px) {
     .app-shell {
         flex-direction: column;
     }
 
     .sidebar {
-        width: 100%;
-        transition: width 0.3s ease;
-    }
-
-    .sidebar--collapsed {
-    width: 80px;
-    }
-
-    .sidebar--collapsed .sidebar__text {
-        opacity: 0;
-        width: 0;
-        overflow: hidden;
-        white-space: nowrap;
-    }
-
-    .sidebar--collapsed .sidebar__link {
-        justify-content: center;
-    }
-
-    .sidebar--collapsed .sidebar__brand {
-        justify-content: center;
+    width: 100%;
     }
 
     .card-grid {
