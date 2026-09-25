@@ -30,8 +30,10 @@ class DashboardController extends Controller
     {
     
     $sales = Sales::with('user')->latest()->get();
+
+    $stocks = Stock::with(['user', 'product'])->latest()->get();
     
-    return view('dashboard.index', compact('sales'));
+    return view('dashboard.index', compact('sales', 'stocks'));
     }
     
     public function getProducts()

@@ -6,10 +6,6 @@
     $products = \App\Models\Product::all();
 @endphp
 
-@php
-    $stock = \App\Models\Stock::all();
-@endphp
-
 @section('content')
     <section class="card-grid">
         <article class="card">
@@ -33,18 +29,23 @@
     <div class="flex justify-between gap-4 mt-6">
         <div class=" card p-4 rounded-lg shadow-md shadow-slate-900/5 w-2/3">
             <div>
-                <span class="card__label"> Movimentações de produtos </span>
+                <span> Movimentações de produtos em estoque</span>
             </div> 
 
             <div class="mt-4 space-y-3 max-h-96 overflow-y-auto pr-2">
-                @forelse ($stock as $stockMovement)
+                @forelse ($stocks as $stockMovement)
                     <div class="rounded-lg bg-white p-4 shadow">
                         <div class="flex justify-between">
                             <div>
-                            <p class="font-semibold"> Movimentação #{{ $stockMovement->id }}</p>
-
+                            <p class="font-semibold"> 
+                                Movimentação #{{ $stockMovement->id }} - <br>
+                                {{ $stockMovement->type === 'entry' ? 'Entrada' : 'Saída' }}: {{ $stockMovement->quantity }} ({{ $stockMovement->product->name }})
+                            </p>
+                            <p class="text-sm text-gray-500"> 
+                                Realizada por: {{ $stockMovement->user->name }}
+                            </p>
                             <p class="text-sm text-gray-500">
-                            {{ $stockMovement->date }}
+                                {{ $stockMovement->created_at->format('d/m/Y H:i:s') }}
                             </p>
                             </div>    
                         </div>

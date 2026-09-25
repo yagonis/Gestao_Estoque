@@ -90,6 +90,7 @@ body {
     padding: 28px 36px;
     background: #fff;
     border-bottom: 1px solid #eadde5;
+    height: 80px;
 }
 .page-header__right{
     display:flex;
@@ -396,6 +397,26 @@ body {
 
     .sidebar {
         width: 100%;
+        transition: width 0.3s ease;
+    }
+
+    .sidebar--collapsed {
+    width: 80px;
+    }
+
+    .sidebar--collapsed .sidebar__text {
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .sidebar--collapsed .sidebar__link {
+        justify-content: center;
+    }
+
+    .sidebar--collapsed .sidebar__brand {
+        justify-content: center;
     }
 
     .card-grid {

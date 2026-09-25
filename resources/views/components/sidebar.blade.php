@@ -9,22 +9,50 @@
     ]
 @endphp
 
-<aside class="sidebar" aria-label="Menu principal">
+<aside id="sidebar" class="sidebar" aria-label="Menu principal">
+
     <div class="sidebar__brand">
-        <span class="sidebar__logo"> GM </span>
-        <div>
-            <strong> Glamour Make </strong>
-            <small> Gestão de Estoque </small>
+
+        <span class="sidebar__logo">GM</span>
+
+        <div class="sidebar__text">
+            <strong>Glamour Make</strong>
+            <small>Gestão de Estoque</small>
         </div>
+
+        <div id="hamburguer">
+            <button
+                id="sidebarToggle"
+                type="button"
+                class="rounded-lg p-2"
+            >
+                ☰
+            </button>
+        </div>
+
     </div>
 
     <nav class="sidebar__nav">
+
         @foreach ($links as $link)
+
             @php($isActive = request()->routeIs($link['route']))
-            <a class="sidebar__link {{ $isActive ? 'sidebar__link--active' : ''}}" href="{{ Route::has($link['route']) ? route($link['route']) : "#" }}">
-                <span> {{ $link['icon'] }}</span>
-                {{ $link['label'] }}
+
+            <a
+                class="sidebar__link {{ $isActive ? 'sidebar__link--active' : '' }}"
+                href="{{ Route::has($link['route']) ? route($link['route']) : '#' }}"
+            >
+                <span class="sidebar__icon">
+                    {{ $link['icon'] }}
+                </span>
+
+                <span class="sidebar__text">
+                    {{ $link['label'] }}
+                </span>
             </a>
+
         @endforeach
+
     </nav>
+
 </aside>

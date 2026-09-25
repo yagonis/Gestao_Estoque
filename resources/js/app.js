@@ -1,13 +1,11 @@
-const button = document.getElementById('MovementButton');
-const form = document.getElementById('MovementForm');
+const sidebar = document.getElementById('sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
 
-if (button && form) {
-    button.addEventListener('click', () => {
-        form.classList.toggle('hidden');
-        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+if (sidebar && sidebarToggle) {
+    sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('sidebar--collapsed');
     });
 }
-
 // ---- Edição de produto ----
 const editModal = document.getElementById('editProductModal');
 const editForm = document.getElementById('editProductForm');

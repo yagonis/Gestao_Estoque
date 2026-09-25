@@ -8,8 +8,8 @@
     <section class="flex h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-pink-50 via-white to-rose-100 px-4">
         <div class="w-full max-w-md rounded-3xl border border-pink-100 bg-white/90 p-8 shadow-xl shadow-pink-100/60 backdrop-blur">
             <div class="mb-8 text-center">
-                <p class="text-sm font-semibold uppercase tracking-[0.3em] text-pink-500">Glamour Make</p>
-                <h1 class="mt-3 text-3xl font-bold text-slate-900">Bem-vindo(a)!</h1>
+                <h1 class="text-lg font-semibold uppercase tracking-[0.3em] text-pink-500">Glamour Make</h1>
+                <h2 class="mt-3 text-3xl font-bold text-slate-900">Bem-vindo(a)!</h2>
                 <p class="mt-2 text-sm text-slate-500">Entre para gerenciar seu estoque.</p>
             </div>
 

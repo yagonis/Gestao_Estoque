@@ -5,23 +5,12 @@
 @section('content')
     <section class="panel">
         <div class="panel__header">
-            <div>
-                <h2>Estoque</h2>
-                <p>Conteúdo de entradas e saídas de estoque será renderizado aqui.</p>
-            </div>
-            <button
-                type="button"
-                id="MovementButton"
-                class="button"
-            >
-                Nova movimentação
-            </button>
         </div>
             <br>
 
         <form method="POST" action="{{ route('stock.store') }}">
             @csrf
-        <div id="MovementForm" class="panel hidden">
+        <div id="MovementForm">
             <div>
                 <select name="product_id" required>
                     <option value="">Selecione um produto</option>
@@ -68,5 +57,20 @@
             </div>
         </div>
     </form>
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
     </section>
 @endsection

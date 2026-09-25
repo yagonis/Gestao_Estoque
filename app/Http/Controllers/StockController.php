@@ -32,6 +32,7 @@ class StockController extends Controller
        $validatedData = $request->validated();
 
         try {
+            $validatedData['user_id'] = auth()->id();
             $movement = DB::transaction(function () use ($validatedData) {
                 $product = Product::where('id', $validatedData['product_id'])
                     ->lockForUpdate()
