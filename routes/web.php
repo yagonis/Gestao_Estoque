@@ -21,7 +21,7 @@ Route::middleware('guest')->group(function () {
 });
 
 // Rotas autenticadas
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'nocache'])->group(function () {
 
     // Dashboard
     Route::get('/', [DashboardController::class, 'index'])

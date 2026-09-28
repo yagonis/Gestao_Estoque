@@ -1,17 +1,17 @@
 @php
     $links = [
-        ['label' => 'Carrinho', 'route' => 'sales.index', 'icon' => '🛒'],
-        ['label' => 'Dashboard', 'route' => 'dashboard', 'icon' => '🏠'],
-        ['label' => 'Produtos', 'route' => 'products.index', 'icon' => '💄'],
-        ['label' => 'Categorias', 'route' => 'categories.index', 'icon' => '🪞'],
-        ['label' => 'Estoque', 'route' => 'stock.index', 'icon' => '📦'],
-        ['label' => 'Usuários', 'route' => 'users.index', 'icon' => '🧑🏾‍🦱'],
+        ['label' => 'Carrinho', 'route' => 'sales.index', 'icon' => 'ShoppingCart'],
+        ['label' => 'Dashboard', 'route' => 'dashboard', 'icon' => 'House'],
+        ['label' => 'Produtos', 'route' => 'products.index', 'icon' => 'ShoppingBag'],
+        ['label' => 'Categorias', 'route' => 'categories.index', 'icon' => 'Tags'],
+        ['label' => 'Estoque', 'route' => 'stock.index', 'icon' => 'Package'],
+        ['label' => 'Usuários', 'route' => 'users.index', 'icon' => 'Users'],
     ]
 @endphp
 
 <aside id="sidebar" class="sidebar" aria-label="Menu principal">
 
-    <div class="sidebar__brand flex justify-between">
+    <div class="sidebar__brand">
 
         <span class="sidebar__logo">GM</span>
 
@@ -21,15 +21,9 @@
         </div>
     </div>
 
-        <div id="hamburguer" >
-            <button
-                id="sidebarToggle"
-                type="button"
-                class="rounded-lg p-2"
-            >
-                ☰
-            </button>
-        </div>
+    
+
+        
     
     <nav class="sidebar__nav">
 
@@ -42,7 +36,7 @@
                 href="{{ Route::has($link['route']) ? route($link['route']) : '#' }}"
             >
                 <span class="sidebar__icon">
-                    {{ $link['icon'] }}
+                    <i data-lucide="{{ $link['icon'] }}"></i>
                 </span>
 
                 <span class="sidebar__text">

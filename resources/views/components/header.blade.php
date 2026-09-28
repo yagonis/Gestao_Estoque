@@ -1,6 +1,15 @@
 @props(['title'=> 'Dashboard'])
 
 <header class="page-header">
+    <div class="page-header__left">
+            <button id="sidebarToggle"
+                id="sidebarToggle"
+                type="button"
+                class="menu-toggle"
+            >
+                ☰
+            </button>
+    </div>
     <div>
         <span class="page-header__eyebrow"> Painel Administrativo </span>
         <h1> {{ $title }} </h1>

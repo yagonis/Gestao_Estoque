@@ -25,11 +25,22 @@
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
     @foreach ($categories as $category)
 
-        <div class="flex min-h-32 overflow-hidden rounded-lg border border-slate-100 bg-white shadow-md shadow-slate-900/5 justify-center items-center">
-                <h3 class="text-lg font-semibold text-slate-900">
+        <div class=" group relative flex min-h-32 overflow-hidden rounded-lg border border-slate-100 bg-white shadow-md shadow-slate-900/5 justify-center items-center">
+                <h3 class="text-lg font-semibold text-slate-900 mb-5">
                     {{ $category->name }}
-                </h3>
+                </h3> 
+            <div class="productsInStock bottom-0 center-0 absolute">
+
+                @if ($category->products->count() === 1)
+                    <p> <strong> 1 </strong> produto</p>
+                
+                @else
+                    <p><strong> {{ $category->products->count() }} </strong> produtos</p>
+                @endif
+            </div>
         </div>
+
+        
 
     @endforeach
 </div>

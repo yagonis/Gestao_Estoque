@@ -39,11 +39,11 @@
 
 
         {{-- GRID DE PRODUTOS --}}
-        <div class="grid grid-cols-2 gap-5 lg:grid-cols-3 xl:grid-cols-4">
+        <div class="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5">
 
     @foreach ($products as $product)
 
-    <div class="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+    <div class="@container group relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
 
         {{-- Imagem --}}
         <div class="aspect-square overflow-hidden bg-slate-100">
@@ -74,9 +74,9 @@
                 {{ $product->category->name }}
             </p>
 
-            <div class="mt-3 flex items-center justify-between">
+            <div class="mt-3 flex flex-col gap-1 @[15rem]:flex-rom @[15rem]:items-center @[15rem]:justify-between">
 
-                <span class="text-lg font-bold text-pink-600">
+                <span class="whitespace-nowrap text-lg font-bold text-pink-600">
                     R$ {{ number_format($product->price, 2, ',', '.') }}
                 </span>
 
@@ -112,7 +112,7 @@
 
 
     {{-- ================= CARRINHO ================= --}}
-    <aside class="sticky top-0 flex h-screen w-1/3 flex-col bg-slate-800 p-6 text-white">
+    <aside class="sticky top-0 flex h-screen w-1/3 min-w-[320px] max-w-[420px] flex-col bg-slate-800 p-6 text-white">
 
         <div class="mb-6">
 

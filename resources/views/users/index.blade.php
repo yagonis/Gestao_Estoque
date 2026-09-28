@@ -58,12 +58,10 @@
     {{-- Formulário --}}
     <form
         id="editUserForm"
-        method="POST"
+        method="PUT"
         class="space-y-5 p-7"
     >
-
-        @csrf
-        @method('PUT')
+    @csrf
 
 
         {{-- Nome --}}

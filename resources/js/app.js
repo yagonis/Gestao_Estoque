@@ -6,6 +6,10 @@ if (sidebar && sidebarToggle) {
         sidebar.classList.toggle('sidebar--collapsed');
     });
 }
+
+if (sidebar && window.matchMedia('(max-width: 800px)').matches) {
+    sidebar.classList.add('sidebar--collapsed');
+}
 // ---- Edição de produto ----
 const editModal = document.getElementById('editProductModal');
 const editForm = document.getElementById('editProductForm');
@@ -104,12 +108,12 @@ if (editUserModal && editUserForm && editUserButtons.length) {
 
         const id = editUserForm.dataset.userId;
         const formData = new FormData(editUserForm);
-        formData.append('_method', 'PUT');
+        formData.append('_method', 'POST');
 
         const csrfToken = document.querySelector('input[name="_token"]');
 
         const response = await fetch(`/users/${id}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'X-CSRF-TOKEN': csrfToken ? csrfToken.value : '',
                 'Accept': 'application/json',
@@ -120,8 +124,23 @@ if (editUserModal && editUserForm && editUserButtons.length) {
         if (response.ok) {
             location.reload();
         } else {
-            const err = await response.json();
+            const err = await response.json().catch(() => ({ status: response.status}));
             console.error(err);
         }
     });
 }
+
+// -- Ícones -- //
+import { createIcons, ShoppingCart, House, ShoppingBag, Tags, Package, Users, Menu } from 'lucide';
+
+createIcons({ 
+    icons: {
+        ShoppingCart,
+        House,
+        ShoppingBag,
+        Tags,
+        Package,
+        Users,
+        Menu
+    }
+});
